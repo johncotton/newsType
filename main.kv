@@ -1,0 +1,508 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+ScreenManagement:
+    transition: FadeTransition()
+    MainScreen:
+    ProcessScreen:
+        id: processScreen
+    ClassifyScreen:
+        id: classifyScreen
+    AlgScreen:
+        id: algScreen
+
+<MainScreen>:
+    name: 'main'
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    FloatLayout:
+        Label:
+            font_size: sp(56)
+            text_size: self.size
+            halign: 'center'
+            valign: 'top'
+            text: 'Welcome to newsType'
+            color: 0,0,0,1
+            #pos_hint: {"center_x": 0 , "center_y": 0.5}
+        GridLayout:
+            cols: 2
+            spacing: 10
+            padding: 10
+            size: root.width/2, root.height/5
+            size_hint: None, None
+            pos_hint: {"right": .75, "top": .55}
+            Button:
+                on_release: app.root.current = "process"
+                text: "Pre-process Text"
+                color: 0,0,0,1
+                font_size: sp(18)
+                size_hint: 0.3, 0.2
+                background_color: 1,1,1,0
+                canvas.before:
+                    Color:
+                        rgba: .5, .5, .5, 1
+                    Line:
+                        width: 2
+                        rectangle: self.x, self.y, self.width, self.height
+                #background_normal: ''
+            Button:
+                on_release: app.root.current = 'classify'
+                text: "Classify a News Article"
+                color: 0,0,0,1
+                font_size: sp(18)
+                size_hint: 0.3, 0.2
+                background_color: 1,1,1,0
+                canvas.before:
+                    Color:
+                        rgba: .5, .5, .5, 1
+                    Line:
+                        width: 2
+                        rectangle: self.x, self.y, self.width, self.height
+                #background_normal: ''
+        Button:
+            on_release: app.stop()
+            text: "Quit"
+            color: 0,0,0,1
+            font_size: sp(25)
+            size_hint: 0.2, 0.1
+            background_color: 1,1,1,0
+            pos_hint: {"right": 1, "bottom": 1}
+            canvas.before:
+                Color:
+                    rgba: .5, .5, .5, 1
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+
+
+<ProcessScreen>:
+    name:'process'
+    id: process
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    FloatLayout:
+        #Title
+        Label:
+            font_size: sp(48)
+            text_size: self.size
+            halign: 'left'
+            valign: 'top'
+            text: 'Pre-process Text'
+            color: 0,0,0,1
+
+#        TextInput:
+#            size_hint: 0.4, 0.3
+#            multiline: True
+
+        GridLayout:
+            cols: 2
+            rows: 1
+
+            size_hint: None, None
+            height: root.height/1.5
+            width: root.width/1.2
+            pos_hint: {'y': .2, 'center_x': .5}
+            padding: dp(5)
+
+            GridLayout
+                cols: 2
+                rows: 10
+                size_hint: None, None
+                height:sp(900/3)
+                width: sp(1600/6)
+                row_default_height: dp(30)
+                row_force_default: True
+                col_default_width: dp(130)
+                col_force_default: True
+                pos_hint: {'y': .1, 'center_x': .5}
+                # Row 1
+                Label:
+                    font_size: sp(23)
+                    text_size: self.size
+                    text: 'Remove:'
+                    color: 0,0,0,1
+
+
+                Label:
+                    text: ''
+                # Row 2
+                CheckBox:
+                    id: cB_Possessives
+                    size_hint: .05, 0.05
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    Label:
+                        text: 'Possessives'
+                        #font_size: sp(32)
+                        #text_size: self.size
+                        size_hint: 0.05, 0.05
+
+                        color: 0,0,0,1
+                # Row 3
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: 10,10,10,10
+                    CheckBox:
+                        id: cB_EscapeCharacters
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: dp(22.5),10,10,10
+                    Label:
+                        text: 'Escape Characters'
+                        size_hint: 0.05, 0.05
+                        #text_size: self.size
+                        color: 0,0,0,1
+                # Row 4
+                CheckBox:
+                    id: cB_DuplicateSpaces
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: dp(18),10,10,10
+                    Label:
+                        text: 'Duplicate Spaces'
+                        size_hint: 0.05, 0.05
+                        #text_size: self.size
+                        color: 0,0,0,1
+                # Row 5
+                CheckBox:
+                    id: cB_Punctuation
+
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: dp(2),10,10,10
+                    Label:
+                        text: 'Punctuation'
+                        size_hint: 0.05, 0.05
+                        #text_size: self.size
+                        color: 0,0,0,1
+                # Row 6
+                CheckBox:
+                    id: cB_StopWords
+
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: dp(1.5),10,10,10
+                    Label:
+                        text: 'Stop-Words'
+                        size_hint: 0.05, 0.05
+                        #text_size: self.size
+                        color: 0,0,0,1
+                # Row 7
+                Label:
+                    text: 'Convert:'
+                    font_size: sp(23)
+                    text_size: self.size
+                    color: 0,0,0,1
+                Label:
+                    text: ''
+                # Row 8
+                CheckBox:
+                    id: cB_Lemmatize
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: dp(1.5),10,10,10
+                    Label:
+                        text: 'Lemmatize'
+                        size_hint: 0.05, 0.05
+                        #text_size: self.size
+                        color: 0,0,0,1
+                # Row 9
+                CheckBox:
+                    id: cB_ToLowercase
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: dp(12.5),10,10,10
+                    Label:
+                        text: 'To Lowercase'
+                        size_hint: 0.05, 0.05
+                        #text_size: self.size
+                        color: 0,0,0,1
+                # Row 10
+                Button:
+                    id: btn_Process
+                    text: 'Process'
+                    on_release: process.processText()
+
+                Button:
+                    id: btn_CopyToClipboard
+                    text: 'Copy to Clipboard'
+                    on_release: process.copyToClip()
+            GridLayout:
+                cols: 2
+                rows: 2
+
+                Label:
+                    text: "Input Text:"
+                    font_size: sp(25)
+                    text_size: self.size
+                    color: 0,0,0,1
+
+                Label:
+                    text: "Output Text:"
+                    font_size: sp(25)
+                    text_size: self.size
+                    color: 0,0,0,1
+                TextInput:
+                    id: tI_InputText
+                    size_hint: None, None
+                    height: root.height/1.7
+                    width: root.width/4
+                    padding: 10
+                    never_selected: False
+                    text: 'Paste Text Here'
+                    on_focus: if self.never_selected == False: self.text = ''; self.never_selected = True
+                    #pos_hint: {'y': .1, 'center_x': .5}
+
+
+                TextInput:
+                    id: tI_OutputText
+                    text: ""
+                    size_hint: None, None
+                    height: root.height/1.7
+                    width: root.width/4
+                    padding: 10
+                    #pos_hint: {'y': .1, 'center_x': .5}
+
+
+        #Back Button
+        Button:
+            on_release: app.root.current = 'main'
+            text: "Back"
+            color: 0,0,0,1
+            font_size: sp(25)
+            size_hint: 0.2, 0.1
+            background_color: 1,1,1,0
+            pos_hint: {"right": 1, "bottom": 1}
+            canvas.before:
+                Color:
+                    rgba: .5, .5, .5, 1
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+
+
+<ClassifyScreen>:
+    name: 'classify'
+    id: classify
+    alg: "SVM"
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    FloatLayout:
+        Label:
+            font_size: sp(28)
+            text_size: self.size
+            halign: 'center'
+            valign: 'top'
+            text: 'Classify a News Article'
+
+            color: 0,0,0,1
+        Button:
+            on_release: app.root.current = 'main'
+            text: "Back"
+            color: 0,0,0,1
+            font_size: sp(25)
+            size_hint: 0.2, 0.1
+            background_color: 1,1,1,0
+            pos_hint: {"right": 1, "bottom": 1}
+            canvas.before:
+                Color:
+                    rgba: .5, .5, .5, 1
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+        BoxLayout
+            orientation: 'vertical'
+            size_hint: None, None
+            height: root.height/1.5
+            width: root.width/1.2
+            pos_hint: {'y': .135, 'center_x': .5}
+            padding: 10, 10
+
+            #Input text Box
+            TextInput:
+                id: classificationInput
+                text: "Paste news article text here"
+                never_selected: False
+                on_focus: if self.never_selected == False: self.text = ''; self.never_selected = True
+                multiline: True
+                size_hint: None, None
+                height: root.height/1.5
+                width: root.width/1.2
+
+                #size: 200,200
+                #pos_hint: {'right': 1}
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                height: root.height/10
+                width: root.width/1.2
+                #padding: 0, -10
+                Button:
+                    id: classificationButton
+                    text: 'Classify'
+                    border: 16, 16, 16, 16
+                    color: 1,1,1,1
+                    font_size: sp(25)
+                    size_hint: None, None
+                    background_color: 0,0,0,1
+                    height: (root.height/11)
+                    width: (root.width/2.5)/2
+                    on_release: classify.pressClassify(alG= app.alg)
+                    on_press: self.background_color = (.5, .5, .5, 1)
+                    canvas.before:
+                        Color:
+                            rgba: .5, .5, .5, 1
+                        Line:
+                            width: 2
+                            rectangle: self.x, self.y, self.width, self.height
+                Button:
+                    id: algButton
+                    text: 'Algorithm'
+                    border: 16, 16, 16, 16
+                    color: 1,1,1,1
+                    font_size: sp(25)
+                    size_hint: None, None
+                    background_color: 0,0,0,1
+                    height: (root.height/11)
+                    width: (root.width/2.5)/2
+                    on_release: app.root.current = 'algScreen'
+                    canvas.before:
+                        Color:
+                            rgba: .5, .5, .5, 1
+                        Line:
+                            width: 2
+                            rectangle: self.x, self.y, self.width, self.height
+                Label:
+                    text: ""
+                    color: 0,0,0,1
+                    font_size: sp(25)
+                    size_hint: None, None
+                    height: root.height/11
+                    width: root.width/30.2
+                    background_color: 1,1,1,0
+
+                Label:
+                    id: classificationLabel
+                    text: ""
+                    color: 0,0,0,1
+                    font_size: sp(25)
+                    size_hint: None, None
+                    height: root.height/11
+                    width: root.width/2.5
+                    background_color: 1,1,1,0
+                    canvas.before:
+                        Color:
+                            rgba: .5, .5, .5, 1
+                        Line:
+                            width: 2
+                            rectangle: self.x, self.y, self.width, self.height
+<AlgScreen>:
+    title: "Choose Classification Algorithm"
+    name: "algScreen"
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: "vertical"
+        GridLayout:
+            cols: 2
+            orientation: "horizontal"
+            size_hint_x: .55
+#            Label:
+#                text: "Choose Classification Algorithm"
+#                color: 0, 0, 0, 1
+#                size_hint_x: .265
+            CheckBox:
+                id: rSVM
+                text: "SVM (Default)"
+                group: "alg"
+                active: True
+                color: 1,1,1,1
+                size_hint_x: .05
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x)+83, (self.y)+17, self.width/3, self.height/2
+            Label:
+                text: "SVM (Default)"
+                color: 0, 0, 0, 1
+                size_hint_x: .15
+            CheckBox:
+                id: rGBC1
+                group: "alg"
+                value: root.GBC1
+                size_hint_x: 0.5
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x)+83, (self.y)+17, self.width/3, self.height/2
+            Label:
+                text: "GBC"
+                color: 0, 0, 0, 1
+                size_hint_x: .15
+            CheckBox:
+                id: rXGB
+                group: "alg"
+                value: root.XGB
+                size_hint_x: 0.5
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x)+83, (self.y)+17, self.width/3, self.height/2
+            Label:
+                text: "XGB"
+                color: 0, 0, 0, 1
+                size_hint_x: .15
+            CheckBox:
+                id: rRFC
+                group: "alg"
+                value: root.RFC
+                size_hint_x: 0.5
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x)+83, (self.y)+17, self.width/3, self.height/2
+            Label:
+                text: "RFC"
+                color: 0, 0, 0, 1
+                size_hint_x: .15
+
+        Button:
+            text: 'Close'
+            size_hint: None, None
+            height: (root.height/4)
+            width: (root.width/1.00)
+            var: ("SVM", None) if rSVM.active else ("GBC1", None) if rGBC1.active else ("XGB", None) if rXGB.active else ("RFC", None)
+            on_press: app.alg = self.var
+            on_release: app.root.current = 'classify'
